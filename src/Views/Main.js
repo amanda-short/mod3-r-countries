@@ -5,19 +5,30 @@ import './Main.css';
 
 export default function Main() {
   const [countries, setCountries] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
-      const resp = await fetchCountries();
-      setCountries(resp);
+      try {
+        const resp = await fetchCountries();
+        setCountries(resp);
+      } catch (e) {
+        setErrorMessage('Unable to find what you asked for...please refresh the page.');
+      }
     };
     fetchData();
   }, []);
 
   return (
-    <div className="main">
-      {countries.map((country) => (
-        <CountryCard key={country.name} {...country} />
-      ))}
+    <div>
+      <div>
+        <p className="error">{errorMessage}</p>
+      </div>
+      <div className="main">
+        {countries.map((country) => (
+          <CountryCard key={country.name} {...country} />
+        ))}
+      </div>
     </div>
   );
 }
