@@ -6,6 +6,18 @@ import './Main.css';
 export default function Main() {
   const [countries, setCountries] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [continent, setContinent] = useState('All');
+
+  const options = [
+    'All',
+    'Oceania',
+    'Europe',
+    'Africa',
+    'North America',
+    'Antarctica',
+    'South America',
+    'Asia',
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,13 +31,24 @@ export default function Main() {
     fetchData();
   }, []);
 
+  const filterCountries = () => {
+    return countries.filter((country) => country.continent === continent || continent === 'All');
+  };
+
   return (
     <div>
-      <div>
-        <p className="error">{errorMessage}</p>
+      <p className="error">{errorMessage}</p>
+      <div className="options">
+        <select onChange={(e) => setContinent(e.target.value)}>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="main">
-        {countries.map((country) => (
+        {filterCountries().map((country) => (
           <CountryCard key={country.name} {...country} />
         ))}
       </div>
