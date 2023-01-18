@@ -6,7 +6,10 @@ img {
 .card {
     display: flex;
     flex-direction: column;
+    border: 5px;
+    border-color: black;
     width: 200px;
     height: 200px;
     text-align: left;
+    border: 1px;
 }
