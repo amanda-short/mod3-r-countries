@@ -7,6 +7,7 @@ export default function Main() {
   const [countries, setCountries] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [continent, setContinent] = useState('All');
+  const [loading, setLoading] = useState(true);
 
   const options = [
     'All',
@@ -24,6 +25,7 @@ export default function Main() {
       try {
         const resp = await fetchCountries();
         setCountries(resp);
+        setLoading(false);
       } catch (e) {
         setErrorMessage('Unable to find what you asked for...please refresh the page.');
       }
@@ -35,9 +37,13 @@ export default function Main() {
     return countries.filter((country) => country.continent === continent || continent === 'All');
   };
 
+  if (loading) return <div className="Loading"></div>;
+
   return (
     <div>
-      <p className="error">{errorMessage}</p>
+      <p className="error" style={{ color: 'red' }}>
+        {errorMessage}
+      </p>
       <div className="options">
         <select onChange={(e) => setContinent(e.target.value)}>
           {options.map((option) => (
