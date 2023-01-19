@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { fetchCountries } from '../../src/services/countries.js';
+import React, { useState } from 'react';
+// import { fetchCountries } from '../../src/services/countries.js';
 import CountryCard from '../components/CountryCard/CountryCard.js';
+import { useCountries } from '../Hooks/useCountries.js';
 import './Main.css';
 
 export default function Main() {
-  const [countries, setCountries] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { countries, errorMessage, loading } = useCountries();
   const [continent, setContinent] = useState('All');
-  const [loading, setLoading] = useState(true);
 
   const options = [
     'All',
@@ -20,24 +19,13 @@ export default function Main() {
     'Asia',
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resp = await fetchCountries();
-        setCountries(resp);
-        setLoading(false);
-      } catch (e) {
-        setErrorMessage('Unable to find what you asked for...please refresh the page.');
-      }
-    };
-    fetchData();
-  }, []);
-
   const filterCountries = () => {
     return countries.filter((country) => country.continent === continent || continent === 'All');
   };
 
-  if (loading) return <div className="Loading"></div>;
+  if (loading && !errorMessage) {
+    return <p className="Loading"></p>;
+  }
 
   return (
     <div>
