@@ -1,15 +1,20 @@
 img {
-    width: 80px;
-    height: 50px;
+    margin-left: 35px;
+    width: 90px;
+    height: 60px;
 }
 
 .card {
     display: flex;
     flex-direction: column;
-    border: 5px;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 5%;
     border-color: black;
-    width: 200px;
-    height: 200px;
-    text-align: left;
-    border: 1px;
+    width: 150px;
+    height: 140px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    background-color:rgb(197, 196, 196);
 }
